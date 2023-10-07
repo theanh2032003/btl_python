@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "telebot-python-ggsheet01",
+  "private_key_id": "1affd58d7dc4c7636a8ff6166941fd642ec7a972",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCq9H8t8bfvubh6\npdT24I/G798/eviXh4YvJbETD8CqDfVRt0vTMvK7DV5cTOQHfSIMIkqNpJm6kTwB\nlPFg5QdFJb1ZtALOPf0mTgiuVTUm2k9vXuTotU3Ozgp3FxkSmyd2IVHAU2XQGHU4\n9PrGR6Xho5kEejrtKJHsoOfQ3Mk8cKYwZYF3aQeUTcddm6EmjKphu7ePVFyak6FG\nqysCIPjO3nNmBMsFAwrfN7XZsJE4yyVVY7bSGuus8x4r7GbNe3OU+hwW1PvuhGks\nxFkRZ3dQcZSIncvFYhFoZpP6T+8yOHccaD73Hz3egfxjsL4BbY+xWyBv7eji3AO4\nVM/5HO4XAgMBAAECggEAUcGn6OMGokDhdtZD6OUwHWWuEH/Qzzbi9z1BV+paq3kN\nb00HmDNvXgFgtSeYjfRMCh2EJgUn989pMSB352zgczM/QN0T0mpW3LDI+gaJ6tDQ\n2GQ7eQbr9REYdCe5t+o3jwkUPbQkpsZrmRefrp+pNyW0Ei4abDzQvKee9YYBP0Oe\njy3maunYqzjzfuFfwv36Tj4Z7/fwUZ5rcXOQqaDfmSK4gHXC+AOSA1voADq0JdsG\nEqfDovnjGalWWhgHtA8COeM6/hGZZuyx0B+ZOVp3slWd0E65fmZHAkvS54iDDWjK\nwTVBHRHrglysR3LNB4g96Vb4voxz1GBn8maNvz+ocQKBgQDuKTy0yn5c6zTehBxz\nYelHgni/XGpoLd3MFDXsOmF0cUF1lUvplS2IIWgqq2WKkuxlIFUal1QhEn5VPznw\nfB1aXQLFvZSvckJL+dlaUPfXrKcKCKzf/ut5RNJ/k314fdOf0yMZWA54qbI3Dyxj\naJ8OAT5zYmKZMqDOcgm3X/vMewKBgQC3wpPV7me4rzGWVps9FpTN0k3Me8G3k7bi\nzlO06WuSuZDCQuRGAKW+iiQSJaEYxrZJj+sxD1wNTnlslRWjndiyeYr9iTmSnHSe\nYGbkWFidMv9SNPRzgEk7+8LSwL1ehzXGn6NSIlDqrbZQchvdk1LhiLw6ZSTVQqXp\nXxIhrrr4FQKBgQCj4OxM2ymodpCirPWGz9DdzAGaa9UsaqM8UovoSSPWJDiO2HSr\n/mKeUZ6D/fyZJhBUZbMp4Qea2kbkEeWkfUMVcvr9Zj5xm4XTEdFmPGDOn5cxaFbM\nq3UMtTbDYpHr32lHiNmWDummTd671E0O+ma4FFMMwp5mHFhatk3JSNrTEQKBgGbv\n8LCeZCvot/ZnfX6y75h8fmhVyyZy8LgMrIdjWodOu/CWWBl+s1oRODOSMLQYXHTI\n0g8hc4dgtlRFD2IgQgt4Wou8GywtyIYPqpOvibRFpRD/6Q/qhRu85F366hnR1CX3\ntx2Da6CKvt5BjaqJpJwCZK6xifiM5TPdteJ4ZvQhAoGBAIf0JhT65M5RXcYreCj8\nRQJcg32YgaZJT2aMndh95jicj3qvfMwNZMcQcKkL4BidkFQ12QjKQCrxdzAYvOOu\nDP/JggtwYQSMFQo09ATR71+e1iHoGXQsYgc7csoaaHqk0PJXNEwlkqtDu3MQ/23+\neUVWS5eyv3/oaxPS5poT4iNj\n-----END PRIVATE KEY-----\n",
+  "client_email": "telebot-quan-ly-chi-tieu@telebot-python-ggsheet01.iam.gserviceaccount.com",
+  "client_id": "105493920856214402780",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/telebot-quan-ly-chi-tieu%40telebot-python-ggsheet01.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
