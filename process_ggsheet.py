@@ -147,8 +147,9 @@ def get_total_data(sheet):
     return f'Tháng này bạn đã chi {monthly_money}, tuần này đã tiêu hêt {weekly_money}'
 
 def delete_row(sheet):
-    row = find_last_row(sheet,1)
+    row = find_last_row(sheet,1)-1
     sheet.update_value(f'A{row}','')
     sheet.update_value(f'B{row}','')
     sheet.update_value(f'D{row}','')
     sheet.update_value(f'E{row}','')
+    sheet.sync()

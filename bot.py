@@ -27,7 +27,7 @@ def Help(update,context):
     
 def process_chi(update, context):
     global sheet
-    text = update.message.text.replace("\chi","")
+    text = update.message.text.replace("/chi","")
     data = [i.strip() for i in text.split(',')]
     update_daily_sheet(sheet,data)
     update_week_sheet(sheet)
@@ -49,6 +49,7 @@ def thoitiet(update,context):
 def delete(update,context):
     global sheet
     delete_row(sheet)
+    update.message.reply_text('Dữ liệu đã được xóa')
 
 def main():
     # Khởi tạo Updater với mã token của bot Telegram
