@@ -1,6 +1,6 @@
 from telegram.ext import Updater, CommandHandler
 import pygsheets
-from process_ggsheet import update_month_sheet,update_week_sheet,update_daily_sheet,get_total_data,find_sunday_ranges
+from process_ggsheet import update_month_sheet,update_week_sheet,update_daily_sheet,get_total_data,find_sunday_ranges,delete_row
 from controller import weather
 from telegram import ParseMode
 
@@ -22,6 +22,7 @@ def Help(update,context):
                               /chi để thêm vào số tiền vừa tiêu theo cú pháp /chi tên sp,số tiền,loại chi tiêu
                               /tien để xem thống kê số tiền đã tiêu
                               /thoitiet để xem thời tiết, cú pháp /thoitiet tên tỉnh thành
+                              /xoa để xóa hàng mới cập nhật
                               """)
     
 def process_chi(update, context):
@@ -45,7 +46,10 @@ def thoitiet(update,context):
         city = update.message.text.replace("/thoitiet","").strip()
         update.message.reply_text(weather(city))
     
-    
+def delete(update,context):
+    global sheet
+    delete_row(sheet)
+
 def main():
     # Khởi tạo Updater với mã token của bot Telegram
     updater = Updater('6081198225:AAFL7zPIho4vOPGAh-kP0uEraCnK4lMJW_4', use_context=True)
@@ -60,6 +64,8 @@ def main():
     dispatcher.add_handler(CommandHandler('chi', process_chi))
     dispatcher.add_handler(CommandHandler('tien', get_data))
     dispatcher.add_handler(CommandHandler('thoitiet', thoitiet))
+    dispatcher.add_handler(CommandHandler('xoa',delete))
+    
     
     
     

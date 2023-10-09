@@ -4,7 +4,6 @@ from datetime import datetime
 from datetime import datetime, timedelta
 import requests
 import json
-import datetime
 from geopy.geocoders import Nominatim
 
 
@@ -102,7 +101,7 @@ def weather(text):
         content=""
     # In thông tin dự báo cho mỗi ngày
         for day in daily_forecasts:
-            date = datetime.datetime.fromtimestamp(day['dt'])
+            date = datetime.fromtimestamp(day['dt'])
             formatted_date = date.strftime('%d/%m/%Y')
             temperature = day["temp"]["day"]-273.15
             humidity = day["humidity"]
