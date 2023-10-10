@@ -106,7 +106,7 @@ def update_week_sheet(sheet):
     # sheet = workbook.worksheet_by_title(sheet_name)
     weeks = find_sunday_ranges(datetime.now().year,datetime.now().month)
     lenght_of_weeksheet = len(weeks)
-    end_row = find_last_row(sheet,1)-1
+    end_row = find_last_row(sheet,1)
     for i in range(len(weeks)):
         Sum1=Sum2=0
         for j in range(15,end_row):
