@@ -46,8 +46,18 @@ def caculater_sum(sheet,column_number,start_row,end_row):
     # return col_values
     
 # sheet_id ='1-Ouzw_BGRgt-8ZxQVA33FHO_V2sDcrDbFUSfPQm4rwU'
-# print(caculater_sum('telebot-python-ggsheet01-1affd58d7dc4.json',sheet_id,'Bảng tổng hợp',4,7,11))
 
+# gc=pygsheets.authorize(service_account_file='telebot-python-ggsheet01-1affd58d7dc4.json')
+# workbook = gc.open_by_key('14MNmqBeaf4pp8Q09pxoIFfuaWuBqVDu11NH1HKsE--U')
+# sheet = workbook.worksheet_by_title('Trang tính1')
+# weeks = find_sunday_ranges(datetime.now().year, datetime.now().month)
+# lenght_of_weeksheet = len(weeks)
+# print(float(sheet.get_value('B3')) - float(sheet.get_value('C3')))
+# print(caculater_sum(sheet,5,7,6+lenght_of_weeksheet))
+# sheet.update_value('B3', caculater_sum(sheet, 5, 7, 6 + lenght_of_weeksheet))
+# cell = sheet.cell('B3')    
+# cell.value = caculater_sum(sheet, 5, 7, 6 + lenght_of_weeksheet)
+# cell.update()
 # tìm row trống đầu tiên
 def find_last_row(worksheet,col):
    

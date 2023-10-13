@@ -1,32 +1,46 @@
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+import pygsheets
 
-
-def write(messageText):
+def init_sheet(sheet_id,path_json,sheet_name):
+    gc=pygsheets.authorize(service_account_file=path_json)
+    workbook = gc.open_by_key(sheet_id)
+    sheet = workbook.worksheet_by_title(sheet_name)
+    sheet.resize(rows=500,cols=11)
+    sheet.merge_cells(start='A1', end='E1')
+    sheet.merge_cells(start='A5', end='E5')
+    sheet.merge_cells(start='A13', end='E13')
+    sheet.merge_cells(start='G1', end='J1')
+    cell = sheet.cell('A1')
+    cell.value = 'Bảng tổng hợp'.title()
+    cell.set_text_format("fontSize", 14)
+    cell.set_text_format("bold", True)
+    cell.update()
+    cell = sheet.cell('A5')    
+    cell.value = 'Bảng tổng hợp theo tuần'.title()
+    cell.set_text_format("fontSize", 14)
+    cell.set_text_format("bold", True)
+    cell.update()
+    cell = sheet.cell('A13')
+    cell.value = 'Thu chi theo ngày'.title()
+    cell.set_text_format("fontSize", 14)
+    cell.set_text_format("bold", True)
+    cell.update()
+    cell = sheet.cell('G1')
+    cell.value = 'Bảng tổng hợp các tháng'.title()
+    cell.set_text_format("fontSize", 14)
+    cell.set_text_format("bold", True)
+    cell.update()
     
-    command = messageText.split()[0]
-    if command == "\chi" :
+    monthly_data = [['Tháng','Tổng thu','Tổng chi','Tiết kiệm']]
+    sheet.update_values('A2D2',monthly_data)
     
-        # Đường dẫn đến file JSON chứa thông tin xác thực
-        credentials_file = 'path/to/credentials.json'
-
-        # Phạm vi truy cập của Google Sheets API
-        scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-
-        # Xác thực và mở kết nối với Google Sheets
-        credentials = ServiceAccountCredentials.from_json_keyfile_name(credentials_file, scope)
-        client = gspread.authorize(credentials)
-
-        # Mở bảng tính theo tên hoặc URL
-        spreadsheet = client.open('Tên bảng tính')
-
-        # Chọn một trang trong bảng tính
-        worksheet = spreadsheet.worksheet('Tên trang')
-
-        # Viết dữ liệu vào ô
-        worksheet.update('A1', 'Hello, World!')
-
-        # Hoặc viết dữ liệu vào nhiều ô cùng một lúc
-        data = [['Dữ liệu 1', 'Dữ liệu 2', 'Dữ liệu 3'],
-                ['Dữ liệu 4', 'Dữ liệu 5', 'Dữ liệu 6']]
-        worksheet.update('A2:C3', data)
+    monthly_data = [['Tháng','Tổng thu','Tổng chi','Tiết kiệm']]
+    sheet.update_values('G2J2',monthly_data)
+    
+    weekly_data = [['Tuần','Bắt Đầu','Kết Thúc','Tổng Thu','Tổng Chi']]
+    sheet.update_values('A6E6',weekly_data)
+    
+    dayly_data = [['Ngày','Mô Tả','Thu','Chi','Loại']]
+    sheet.update_values('A14E14',dayly_data)
+    return workbook,sheet
+    
+# init_sheet('14MNmqBeaf4pp8Q09pxoIFfuaWuBqVDu11NH1HKsE--U','telebot-python-ggsheet01-1affd58d7dc4.json','Trang tính1')

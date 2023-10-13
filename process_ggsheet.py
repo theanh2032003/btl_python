@@ -86,19 +86,35 @@ sheet_id ='1-Ouzw_BGRgt-8ZxQVA33FHO_V2sDcrDbFUSfPQm4rwU'
 # update_dayly_sheet('telebot-python-ggsheet01-1affd58d7dc4.json',sheet_id,'Bảng tổng hợp','B15:D15',[['42500','','nha']])
 
 
-def update_month_sheet(sheet):
-    # gc=pygsheets.authorize(service_account_file=path_json)
-    # workbook = gc.open_by_key(sheet_id)
-    # sheet = workbook.worksheet_by_title(sheet_name)
-    weeks = find_sunday_ranges(datetime.now().year,datetime.now().month)
-    lenght_of_weeksheet = len(weeks)
-    sheet.update_value('B3',caculater_sum(sheet,4,7,6+lenght_of_weeksheet))
-    sheet.update_value('C3',caculater_sum(sheet,5,7,6+lenght_of_weeksheet))
-    sheet.update_value('D3',float(sheet.get_value('B3'))-float(sheet.get_value('C3')))
-    sheet.sync()
+# def update_month_sheet(sheet):
+
+#     weeks = find_sunday_ranges(datetime.now().year, datetime.now().month)
+#     lenght_of_weeksheet = len(weeks)
+#     sheet.update_value('B3', caculater_sum(sheet, 4, 7, 6 + lenght_of_weeksheet))
+#     sheet.update_value('C3', caculater_sum(sheet, 5, 7, 6 + lenght_of_weeksheet))
+#     sheet.update_value('D3',float(sheet.get_value('B3')) - float(sheet.get_value('C3')))
+#     sheet.update_value('A3',datetime.now().strftime('%Y-%m'))    
+#     sheet.sync()
     # sheet.update_value('B3',caculater_sum(sheet,4,7,6+lenght_of_weeksheet))
     
 # update_month_sheet('telebot-python-ggsheet01-1affd58d7dc4.json',sheet_id,'Bảng tổng hợp')
+
+def update_month_sheet(sheet):
+  # gc=pygsheets.authorize(service_account_file=path_json)
+  # workbook = gc.open_by_key(sheet_id)
+  # sheet = workbook.worksheet_by_title(sheet_name)
+  weeks = find_sunday_ranges(datetime.now().year, datetime.now().month)
+  lenght_of_weeksheet = len(weeks)
+#   cell = sheet.cell('B3')  
+#   cell.value = caculater_sum(sheet, 4, 7, 6 + lenght_of_weeksheet)
+#   cell.update()
+#   cell = sheet.cell('C3')  
+#   cell.value = caculater_sum(sheet, 5, 7, 6 + lenght_of_weeksheet)
+#   cell.update()
+  value_B3=caculater_sum(sheet, 4, 7, 6 + lenght_of_weeksheet)
+  value_C3=caculater_sum(sheet, 5, 7, 6 + lenght_of_weeksheet)
+  sheet.update_values('A3D3', [[datetime.now().strftime('%Y-%m'),value_B3,value_C3,value_B3-value_C3]])
+  sheet.sync()
 
 def update_week_sheet(sheet):
     # gc=pygsheets.authorize(service_account_file=path_json)
@@ -108,6 +124,9 @@ def update_week_sheet(sheet):
     lenght_of_weeksheet = len(weeks)
     end_row = find_last_row(sheet,1)
     for i in range(len(weeks)):
+        sheet.update_values(f'A{i+7}C{i+7}',[[f'{i+1}',weeks[i][0].strftime('%Y-%m-%d'),weeks[i][1].strftime('%Y-%m-%d')]])
+    for i in range(len(weeks)):
+        
         Sum1=Sum2=0
         for j in range(15,end_row):
             if compare_String_date(weeks[i][0].strftime('%Y-%m-%d'),weeks[i][1].strftime('%Y-%m-%d'),sheet.get_value(f'A{j}'))  :
@@ -119,7 +138,7 @@ def update_week_sheet(sheet):
         sheet.update_value(f'E{7+i}',Sum2)
     sheet.sync()
         
-def update_daily_sheet(sheet,values):
+def update_daily_sheet_chi(sheet,values):
     # gc=pygsheets.authorize(service_account_file=path_json)
     # workbook = gc.open_by_key(sheet_id)
     # sheet = workbook.worksheet_by_title(sheet_name)
@@ -127,6 +146,17 @@ def update_daily_sheet(sheet,values):
     sheet.update_value(f'A{first_empty_row}',datetime.now().strftime('%Y-%m-%d'))
     sheet.update_value(f'B{first_empty_row}',values[0])
     sheet.update_value(f'D{first_empty_row}',values[1])
+    sheet.update_value(f'E{first_empty_row}',values[2])
+    sheet.sync()
+
+def update_daily_sheet_thu(sheet,values):
+    # gc=pygsheets.authorize(service_account_file=path_json)
+    # workbook = gc.open_by_key(sheet_id)
+    # sheet = workbook.worksheet_by_title(sheet_name)
+    first_empty_row = find_last_row(sheet,1)
+    sheet.update_value(f'A{first_empty_row}',datetime.now().strftime('%Y-%m-%d'))
+    sheet.update_value(f'B{first_empty_row}',values[0])
+    sheet.update_value(f'C{first_empty_row}',values[1])
     sheet.update_value(f'E{first_empty_row}',values[2])
     sheet.sync()
         
@@ -153,3 +183,25 @@ def delete_row(sheet):
     sheet.update_value(f'D{row}','')
     sheet.update_value(f'E{row}','')
     sheet.sync()
+    
+def update_repo_sheet(sheet):
+    data = sheet.get_values('A3D3')
+    sheet.update_values('G3J3',data)
+    sheet.sync()   
+ 
+def reset_daily_sheet_month(sheet):
+    today = datetime.now()
+    first_day_of_next_month = (today.replace(day=1)+timedelta(days=32-today.day)).replace(day=1)
+    if today.date() == first_day_of_next_month.date():
+        update_repo_sheet(sheet)
+        end_row = find_last_row(sheet,1)
+        range_label = f'A{15}:E{end_row}'
+        sheet.clear_range(range_label)
+        sheet.sync()       
+        update_week_sheet(sheet)
+        update_month_sheet(sheet)
+        sheet.sync() 
+
+
+
+        
