@@ -2,21 +2,21 @@ from telegram.ext import Updater, CommandHandler,MessageHandler,Filters
 import pygsheets
 from process_ggsheet import update_month_sheet,update_week_sheet,update_daily_sheet_chi,update_daily_sheet_thu,get_total_data,find_sunday_ranges,delete_row,reset_daily_sheet_month
 import datetime
-from controller import weather
+from controller import weather,get_news
 from telegram import ParseMode
 from WriteGGSheet import init_sheet
 
 # sheet_id ='1-Ouzw_BGRgt-8ZxQVA33FHO_V2sDcrDbFUSfPQm4rwU'
-# path_json='telebot-python-ggsheet01-1affd58d7dc4.json'
-# sheet_name='Bảng tổng hợp'
-sheet_id ='14MNmqBeaf4pp8Q09pxoIFfuaWuBqVDu11NH1HKsE--U'
 path_json='telebot-python-ggsheet01-1affd58d7dc4.json'
-sheet_name='Trang tính1'
+# sheet_name='Bảng tổng hợp'
+# sheet_id ='14MNmqBeaf4pp8Q09pxoIFfuaWuBqVDu11NH1HKsE--U'
+# path_json='telebot-python-ggsheet01-1affd58d7dc4.json'
+# sheet_name='Trang tính1'
 # gc=pygsheets.authorize(service_account_file=path_json)
 # workbook = gc.open_by_key(sheet_id)
 # sheet = workbook.worksheet_by_title(sheet_name)
-workbook,sheet = init_sheet(sheet_id,path_json,sheet_name)
-workbook.share('dinhanh2032003@gmail.com', role='reader')
+workbook,sheet = init_sheet(path_json)
+workbook.share("", role="reader", type="anyone")
 # print(get_total_data(sheet))
 # Định nghĩa hàm xử lý lệnh /start
 def start_command(update,context):
@@ -33,6 +33,7 @@ def Help(update,context):
                               /tien để xem thống kê số tiền đã tiêu
                               /thoitiet để xem thời tiết, cú pháp /thoitiet tên tỉnh thành
                               /xoa để xóa hàng mới cập nhật
+                              /news để xem tin tức
                               """)
     
     
@@ -94,6 +95,10 @@ def handle_default_message(update,context):
     message = update.message.text
     update.message.reply_text('Tin nhắn ko hợp lệ')
     
+def get_new(update,context):
+    message = get_news()
+    update.message.reply_text(message)
+    
     
 
 def main():
@@ -112,6 +117,7 @@ def main():
     dispatcher.add_handler(CommandHandler('tien', get_data))
     dispatcher.add_handler(CommandHandler('thoitiet', thoitiet))
     dispatcher.add_handler(CommandHandler('xoa',delete))
+    dispatcher.add_handler(CommandHandler('news',get_new))
     default_handler = MessageHandler(Filters.text,handle_default_message)
     dispatcher.add_handler(default_handler)
     

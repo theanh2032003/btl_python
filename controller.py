@@ -5,6 +5,27 @@ from datetime import datetime, timedelta
 import requests
 import json
 from geopy.geocoders import Nominatim
+from bs4 import BeautifulSoup
+from django.shortcuts import render
+
+
+def get_news():
+    list_news = []
+    r = requests.get("https://vnexpress.net/")
+    soup = BeautifulSoup(r.text, 'html.parser')
+    mydivs = soup.find_all("h3", {"class": "title-news"})
+
+    for new in mydivs:
+        newdict = {}
+        newdict["link"] = new.a.get("href")
+        newdict["title"] = new.a.get("title")
+        list_news.append(newdict)
+    str1=""
+    for i in range(3):
+        str1 += list_news[i]["title"] + "\n"
+        str1 += list_news[i]["link"] + "\n"
+        
+    return str1
 
 
 # def caculater_sum(worksheet,range_str):

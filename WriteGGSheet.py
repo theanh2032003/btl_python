@@ -1,9 +1,9 @@
 import pygsheets
 
-def init_sheet(sheet_id,path_json,sheet_name):
+def init_sheet(path_json):
     gc=pygsheets.authorize(service_account_file=path_json)
-    workbook = gc.open_by_key(sheet_id)
-    sheet = workbook.worksheet_by_title(sheet_name)
+    workbook = gc.create('Bảng tổng hợp')
+    sheet = workbook.worksheet_by_title("Trang tính1")
     sheet.resize(rows=500,cols=11)
     sheet.merge_cells(start='A1', end='E1')
     sheet.merge_cells(start='A5', end='E5')
