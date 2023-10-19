@@ -112,43 +112,48 @@ def weather(text):
     location = geolocator.geocode(text)
     base_url = "http://api.openweathermap.org/data/3.0/onecall?"
 
-    # Tọa độ của vị trí bạn muốn lấy thông tin thời tiết
-    lat = str(location.latitude)
-    lon = str(location.longitude)
+    # # Tọa độ của vị trí bạn muốn lấy thông tin thời tiết
+    # lat = str(location.latitude)
+    # lon = str(location.longitude)
 
     # Khóa API của bạn
     # api_key = "fe8d8c65cf345889139d8e545f57819a"
     api_key = "baa9836372d89099b39df87393ae2fed"
     # Cập nhật URL với tọa độ và khóa API
-    call_url = base_url + "lat=" + lat + "&lon=" + lon + "&exclude=current,minutely,hourly,alerts&appid=" + api_key
-    
-    response = requests.get(call_url)
-    data = response.json()
+    # call_url = base_url + "lat=" + lat + "&lon=" + lon + "&exclude=current,minutely,hourly,alerts&appid=" + api_key
+    url_25 =f"https://api.openweathermap.org/data/2.5/weather?q={text}&appid={api_key}"
+    response25 = requests.get(url_25)
+    data25 = response25.json()
+
+    # response = requests.get(call_url)
+    # data = response.json()
 
     
-    if data:
+    if data25['cod'] != '404':
+        # Tọa độ của vị trí bạn muốn lấy thông tin thời tiết
+        lat = str(location.latitude)
+        lon = str(location.longitude)
+        call_url = base_url + "lat=" + lat + "&lon=" + lon + "&exclude=current,minutely,hourly,alerts&appid=" + api_key
+        response = requests.get(call_url)
+        data = response.json()
     # Lấy thông tin dự báo hàng ngày
         daily_forecasts = data["daily"]
         content=""
     # In thông tin dự báo cho mỗi ngày
-        for day in daily_forecasts:
-            date = datetime.fromtimestamp(day['dt'])
-            formatted_date = date.strftime('%d/%m/%Y')
-            temperature = day["temp"]["day"]-273.15
-            humidity = day["humidity"]
-            wind_speed = day["wind_speed"]
-            pressure = day["pressure"]
-            weather_description = day["weather"][0]["description"]
-            content += """
-            Ngày {date}:
-            Nhiệt độ: {temperature} K
-            Độ ẩm: {humidity}%
-            Tốc độ gió: {wind_speed} m/s
-            Áp suất: {pressure} hPa
-            Mô tả thời tiết: {weather_description}""".format(date=formatted_date,temperature=round(temperature),humidity=humidity,wind_speed=wind_speed,
-                                                             pressure=pressure,weather_description=weather_description)
+        for i in range(5):
+          date = datetime.fromtimestamp(daily_forecasts[i]['dt'])
+          formatted_date = date.strftime('%d/%m/%Y')
+          temperature = daily_forecasts[i]["temp"]["day"]-273.15
+          humidity = daily_forecasts[i]["humidity"]
+          weather_description = daily_forecasts[i]["weather"][0]["description"]
+          content += f"""
+          Ngày {formatted_date}:
+              Nhiệt độ: {temperature} K
+              Độ ẩm: {humidity}%
+              Mô tả thời tiết: {weather_description}"""
+          
         return content
     else:
-        return("Nhập vào không hợp lệ")
+        return("Nhập vào tên thành phố không hợp lệ")
 
-
+print(weather("Haf Nộiii"))

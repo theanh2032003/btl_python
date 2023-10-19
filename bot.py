@@ -78,7 +78,7 @@ def hello(update, context):
 
 def thoitiet(update,context):
         city = update.message.text.replace("/thoitiet","").strip()
-        update.message.reply_text(weather(city))
+        update.message.reply_markdown_v2(weather(city))
     
 def delete(update,context):
     global sheet
@@ -97,7 +97,7 @@ def handle_default_message(update,context):
     
 def get_new(update,context):
     message = get_news()
-    update.message.reply_text(message)
+    update.message.reply_markdown_v2(message)
     
     
 
