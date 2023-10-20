@@ -116,7 +116,7 @@ def update_month_sheet(sheet):
   sheet.update_values('A3D3', [[datetime.now().strftime('%Y-%m'),value_B3,value_C3,value_B3-value_C3]])
   sheet.sync()
 
-def update_week_sheet(sheet):
+def update_week_sheet_thu(sheet,data):
     # gc=pygsheets.authorize(service_account_file=path_json)
     # workbook = gc.open_by_key(sheet_id)
     # sheet = workbook.worksheet_by_title(sheet_name)
@@ -126,17 +126,14 @@ def update_week_sheet(sheet):
     for i in range(len(weeks)):
         sheet.update_values(f'A{i+7}C{i+7}',[[f'{i+1}',weeks[i][0].strftime('%Y-%m-%d'),weeks[i][1].strftime('%Y-%m-%d')]])
     for i in range(len(weeks)):
-        
-        Sum1=Sum2=0
-        for j in range(15,end_row):
-            if compare_String_date(weeks[i][0].strftime('%Y-%m-%d'),weeks[i][1].strftime('%Y-%m-%d'),sheet.get_value(f'A{j}'))  :
-                if sheet.get_value(f'C{j}')!='':
-                    Sum1+=int(sheet.get_value(f'C{j}'))
-                if sheet.get_value(f'D{j}') !='':
-                    Sum2+=int(sheet.get_value(f'D{j}'))
-        sheet.update_value(f'D{7+i}',Sum1)
-        sheet.update_value(f'E{7+i}',Sum2)
+            if compare_String_date(weeks[i][0].strftime('%Y-%m-%d'),weeks[i][1].strftime('%Y-%m-%d'),datetime.now().strftime('%Y-%m-%d'))  :
+               if sheet.get_value(f'D{7+i}') == '': sheet.update_value(f'D{7+i}',0)
+               if sheet.get_value(f'E{7+i}') == '': sheet.update_value(f'E{7+i}',0)
+               sheet.sync()
+               sheet.update_value(f'D{7+i}',float(sheet.get_value(f'D{7+i}'))+data[0])
+               sheet.update_value(f'E{7+i}',float(sheet.get_value(f'E{7+i}'))+data[1])    
     sheet.sync()
+    
         
 def update_daily_sheet_chi(sheet,values):
     # gc=pygsheets.authorize(service_account_file=path_json)
@@ -177,12 +174,10 @@ def get_total_data(sheet):
     return f'Tháng này bạn đã chi {monthly_money}, tuần này đã tiêu hêt {weekly_money}'
 
 def delete_row(sheet):
-    row = find_last_row(sheet,1)-1
-    sheet.update_value(f'A{row}','')
-    sheet.update_value(f'B{row}','')
-    sheet.update_value(f'D{row}','')
-    sheet.update_value(f'E{row}','')
-    sheet.sync()
+  row = find_last_row(sheet, 1) - 1
+  data = [['', '', '', '', '']]
+  sheet.update_values(f'A{row}E{row}', data)
+  sheet.sync()
     
 def update_repo_sheet(sheet):
     data = sheet.get_values('A3D3')
@@ -197,9 +192,8 @@ def reset_daily_sheet_month(sheet):
         end_row = find_last_row(sheet,1)
         range_label = f'A{15}:E{end_row}'
         sheet.clear_range(range_label)
-        sheet.sync()       
-        update_week_sheet(sheet)
-        update_month_sheet(sheet)
+        sheet.clear_range(f'A{7}:E{12}')
+        sheet.clear_range(f'A{3}:D{3}')    
         sheet.sync() 
 
 

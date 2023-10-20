@@ -156,4 +156,4 @@ def weather(text):
     else:
         return("Nhập vào tên thành phố không hợp lệ")
 
-print(weather("Haf Nộiii"))
+# print(weather("Haf Nộiii"))

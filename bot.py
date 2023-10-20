@@ -2,7 +2,7 @@ from telegram.ext import Updater, CommandHandler,MessageHandler,Filters
 import pygsheets
 from process_ggsheet import update_month_sheet,update_week_sheet,update_daily_sheet_chi,update_daily_sheet_thu,get_total_data,find_sunday_ranges,delete_row,reset_daily_sheet_month
 import datetime
-from controller import weather,get_news
+from controller import weather,get_news,find_last_row
 from telegram import ParseMode
 from WriteGGSheet import init_sheet
 
@@ -45,7 +45,7 @@ def process_chi(update, context):
     try:
         i = float(data[1])
         update_daily_sheet_chi(sheet,data)
-        update_week_sheet(sheet)
+        update_week_sheet(sheet,[0,i])
         update_month_sheet(sheet)
         update.message.reply_text('Dữ liệu đã được thêm vào')
     except ValueError:
@@ -60,7 +60,7 @@ def process_thu(update, context):
     try:
         i=float(data[1])
         update_daily_sheet_thu(sheet,data)
-        update_week_sheet(sheet)
+        update_week_sheet(sheet,[i,0])
         update_month_sheet(sheet)
         update.message.reply_text('Dữ liệu đã được thêm vào')
     except ValueError:
@@ -82,8 +82,12 @@ def thoitiet(update,context):
     
 def delete(update,context):
     global sheet
+    row = find_last_row(sheet, 1) - 1
+    data=[-float(sheet.get_value(f'C{row}')),-float(sheet.get_value(f'C{row}'))]
     reset_daily_sheet_month(sheet)
     delete_row(sheet)
+    update_week_sheet(sheet,data)
+    update_month_sheet(sheet)
     update.message.reply_text('Dữ liệu đã được xóa')
 
 # def reset(update,context):
