@@ -56,29 +56,13 @@ def find_sunday_ranges(year, month):
 
 # tính tổng theo cột trong sheet
 def caculater_sum(sheet,column_number,start_row,end_row):
-    # col_values = sheet.get_col(column_name,start=start_row,end=end_row)
-    # gc=pygsheets.authorize(service_account_file=path_json)
-    # workbook = gc.open_by_key(sheet_id)
-    # sheet = workbook.worksheet_by_title(sheet_name)
     start_cell = (start_row, column_number)
     end_cell = (end_row, column_number)
     col_values = sheet.get_values(start=start_cell,end=end_cell, returnas='matrix', majdim='COLUMNS')
     return sum([float(value) for sublist in col_values for value in sublist  if value[0] != ''])
     # return col_values
     
-# sheet_id ='1-Ouzw_BGRgt-8ZxQVA33FHO_V2sDcrDbFUSfPQm4rwU'
 
-# gc=pygsheets.authorize(service_account_file='telebot-python-ggsheet01-1affd58d7dc4.json')
-# workbook = gc.open_by_key('14MNmqBeaf4pp8Q09pxoIFfuaWuBqVDu11NH1HKsE--U')
-# sheet = workbook.worksheet_by_title('Trang tính1')
-# weeks = find_sunday_ranges(datetime.now().year, datetime.now().month)
-# lenght_of_weeksheet = len(weeks)
-# print(float(sheet.get_value('B3')) - float(sheet.get_value('C3')))
-# print(caculater_sum(sheet,5,7,6+lenght_of_weeksheet))
-# sheet.update_value('B3', caculater_sum(sheet, 5, 7, 6 + lenght_of_weeksheet))
-# cell = sheet.cell('B3')    
-# cell.value = caculater_sum(sheet, 5, 7, 6 + lenght_of_weeksheet)
-# cell.update()
 # tìm row trống đầu tiên
 def find_last_row(worksheet,col):
    
@@ -112,21 +96,12 @@ def weather(text):
     location = geolocator.geocode(text)
     base_url = "http://api.openweathermap.org/data/3.0/onecall?"
 
-    # # Tọa độ của vị trí bạn muốn lấy thông tin thời tiết
-    # lat = str(location.latitude)
-    # lon = str(location.longitude)
-
-    # Khóa API của bạn
-    # api_key = "fe8d8c65cf345889139d8e545f57819a"
     api_key = "baa9836372d89099b39df87393ae2fed"
-    # Cập nhật URL với tọa độ và khóa API
-    # call_url = base_url + "lat=" + lat + "&lon=" + lon + "&exclude=current,minutely,hourly,alerts&appid=" + api_key
+
     url_25 =f"https://api.openweathermap.org/data/2.5/weather?q={text}&appid={api_key}"
     response25 = requests.get(url_25)
     data25 = response25.json()
 
-    # response = requests.get(call_url)
-    # data = response.json()
 
     
     if data25['cod'] != '404':
