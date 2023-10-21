@@ -123,7 +123,7 @@ def weather(text):
           weather_description = daily_forecasts[i]["weather"][0]["description"]
           content += f"""
           Ngày {formatted_date}:
-              Nhiệt độ: {temperature} K
+              Nhiệt độ: {round(temperature)} C
               Độ ẩm: {humidity}%
               Mô tả thời tiết: {weather_description}"""
           
@@ -131,4 +131,4 @@ def weather(text):
     else:
         return("Nhập vào tên thành phố không hợp lệ")
 
-# print(weather("Haf Nộiii"))
+print(weather("Hà Nội"))

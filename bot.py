@@ -91,7 +91,11 @@ def thoitiet(update,context):
 def delete(update,context):
     global sheet
     row = find_last_row(sheet, 1) - 1
-    data=[-float(sheet.get_value(f'C{row}')),-float(sheet.get_value(f'C{row}'))]
+    a=b=0
+    if sheet.get_value(f'C{row}') !='': a=-float(sheet.get_value(f'C{row}'))
+    if sheet.get_value(f'D{row}') !='': b=-float(sheet.get_value(f'D{row}'))
+
+    data = [a,b]
     reset_daily_sheet_month(sheet)
     delete_row(sheet)
     update_week_sheet(sheet,data)
