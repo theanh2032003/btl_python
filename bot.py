@@ -6,18 +6,12 @@ from controller import weather,get_news,find_last_row
 from telegram import ParseMode
 from WriteGGSheet import init_sheet
 
-# sheet_id ='1-Ouzw_BGRgt-8ZxQVA33FHO_V2sDcrDbFUSfPQm4rwU'
-path_json='telebot-python-ggsheet01-1affd58d7dc4.json'
-# sheet_name='Bảng tổng hợp'
-# sheet_id ='14MNmqBeaf4pp8Q09pxoIFfuaWuBqVDu11NH1HKsE--U'
-# path_json='telebot-python-ggsheet01-1affd58d7dc4.json'
-# sheet_name='Trang tính1'
-# gc=pygsheets.authorize(service_account_file=path_json)
-# workbook = gc.open_by_key(sheet_id)
-# sheet = workbook.worksheet_by_title(sheet_name)
-workbook,sheet = init_sheet(path_json)
-workbook.share("", role="reader", type="anyone")
-# print(get_total_data(sheet))
+
+sheet_id = '1-Ouzw_BGRgt-8ZxQVA33FHO_V2sDcrDbFUSfPQm4rwU'
+path_json = 'telebot-python-ggsheet01-1affd58d7dc4.json'
+sheet_name = 'Bảng tổng hợp'
+workbook, sheet = init_sheet(sheet_id, path_json, sheet_name)
+workbook.share('dinhanh2032003@gmail.com', role='reader')
 # Định nghĩa hàm xử lý lệnh /start
 def start_command(update,context):
     global sheet
@@ -119,7 +113,9 @@ def get_new(update,context):
 
 def main():
     # Khởi tạo Updater với mã token của bot Telegram
-    updater = Updater('6562823385:AAHVs5NlnGpyiKi6Ybi7VnLtIS1hCArljck', use_context=True)
+    # updater = Updater('6562823385:AAHVs5NlnGpyiKi6Ybi7VnLtIS1hCArljck', use_context=True)
+    updater = Updater('6081198225:AAFL7zPIho4vOPGAh-kP0uEraCnK4lMJW_4', use_context=True)
+    
 
     # Lấy Dispatcher từ Updater
     dispatcher = updater.dispatcher
