@@ -28,43 +28,51 @@ def Help(update,context):
     global sheet
     reset_daily_sheet_month(sheet)
     update.message.reply_text(""""Nhập các lệnh sau
-                              /start để bắt đầu
-                              /chi để thêm vào số tiền vừa tiêu theo cú pháp /chi tên sp,số tiền,loại chi tiêu
-                              /tien để xem thống kê số tiền đã tiêu
-                              /thoitiet để xem thời tiết, cú pháp /thoitiet tên tỉnh thành
-                              /xoa để xóa hàng mới cập nhật
-                              /news để xem tin tức
+                             /start để bắt đầu
+                             /chi để thêm vào số tiền vừa tiêu theo cú pháp /chi tên sp,số tiền,loại chi tiêu
+                             /thu để thêm vào số tiền vừa tiêu theo cú pháp /thu tên sp,số tiền,loại chi tiêu
+                             /tien để xem thống kê số tiền đã tiêu                              
+                             /xoa để xóa hàng mới cập nhật
+                             /thoitiet để xem thời tiết, cú pháp /thoitiet tên tỉnh thành
+                             /news để xem tin tức
                               """)
     
     
 def process_chi(update, context):
-    global sheet
-    reset_daily_sheet_month(sheet)
-    text = update.message.text.replace("/chi","")
-    data = [i.strip() for i in text.split(',')]
-    try:
-        i = float(data[1])
-        update_daily_sheet_chi(sheet,data)
-        update_week_sheet(sheet,[0,i])
-        update_month_sheet(sheet)
-        update.message.reply_text('Dữ liệu đã được thêm vào')
-    except ValueError:
-        update.message.reply_text('Vui lòng nhập đúng định dạng')
+  global sheet
+  reset_daily_sheet_month(sheet)
+  text = update.message.text.replace("/chi", "")
+  data = [i.strip() for i in text.split(',')]
+  try:
+    if len(data) != 3:
+      raise ValueError('Số lượng dữ liệu không đúng')
+    i = float(data[1])
+    update_daily_sheet_chi(sheet, data)
+    update_week_sheet(sheet, [0, i])
+    update_month_sheet(sheet)
+    update.message.reply_text('Dữ liệu đã được thêm vào')
+  except ValueError:
+    update.message.reply_text(
+        "Vui lòng nhập đúng định dạng /chi tên sp,số tiền,loại chi tiêu")
         
     
 def process_thu(update, context):
-    global sheet
-    reset_daily_sheet_month(sheet)
-    text = update.message.text.replace("/thu","")
-    data = [i.strip() for i in text.split(',')]
-    try:
-        i=float(data[1])
-        update_daily_sheet_thu(sheet,data)
-        update_week_sheet(sheet,[i,0])
-        update_month_sheet(sheet)
-        update.message.reply_text('Dữ liệu đã được thêm vào')
-    except ValueError:
-        update.message.reply_text('Vui lòng nhập đúng định dạng')
+  global sheet
+  reset_daily_sheet_month(sheet)
+  text = update.message.text.replace("/thu", "")
+  data = [i.strip() for i in text.split(',')]
+  try:
+    if len(data) != 3:
+      raise ValueError('Số lượng dữ liệu không đúng')
+    i = float(data[1])
+    update_daily_sheet_thu(sheet, data)
+    update_week_sheet(sheet, [i, 0])
+    update_month_sheet(sheet)
+    update.message.reply_text('Dữ liệu đã được thêm vào')
+  except ValueError:
+    update.message.reply_text(
+        "Vui lòng nhập đúng định dạng cú pháp /thu tên sp,số tiền,loại chi tiêu"
+    )
         
     
 def get_data(update, context):
